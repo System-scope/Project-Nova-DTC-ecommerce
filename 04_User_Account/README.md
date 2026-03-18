@@ -27,7 +27,7 @@ Users can:
 - If no address exists → user is required to add a new address
 
 **UX Consideration:**
-Pre-selecting a default address reduces friction and speeds up the checkout process.
+Pre-selecting a default address reduces friction and speeds up checkout.
 
 ---
 
@@ -58,19 +58,24 @@ Users can:
 Users can:
 
 - View past orders
-- Access order details and invoices
+- Access order details including:
+  - Items purchased
+  - Pricing breakdown
+  - Payment method
+  - Invoice
 
 ---
 
 ### 6. Order Tracking
 
-Users can:
+Users can track order status:
 
-- Track current order status:
-  - Placed
-  - Packed
-  - Shipped
-  - Delivered
+- Placed
+- Confirmed
+- Packed
+- Shipped
+- Out for Delivery
+- Delivered
 
 **Access Points:**
 - Order confirmation page
@@ -80,21 +85,37 @@ Users can:
 
 ### 7. Returns & Refunds (User Side)
 
-Users can:
+Users can initiate and track returns from the order history.
 
-- Raise return requests within eligible window
-- Select return reason
-- Upload supporting images
+**Return Initiation:**
+- Select return reason (mandatory)
+- Upload product image (mandatory)
+- Add additional comments (optional)
 
 **System Behavior:**
-- Return requests are subject to validation and approval
-- Refund is processed via original payment method
+- Return request cannot be submitted without required inputs
+- Request is created with "Return Requested" status
+
+---
+
+**Refund Tracking:**
+
+Users can track refund status as:
+
+- Return Requested  
+- Return Approved  
+- Refund Processing  
+- Refunded  
+
+**Refund Behavior:**
+- Refund is processed after approval
+- Amount is credited to original payment method
 
 ---
 
 ### Key Focus Areas
 
-- Post-purchase experience
+- Seamless post-purchase experience
+- Faster checkout through saved data
+- Transparent order and refund tracking
 - User convenience and retention
-- Data persistence (addresses, payments)
-- Seamless order and profile management
