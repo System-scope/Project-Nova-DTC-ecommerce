@@ -1,91 +1,90 @@
 ## User Journey Overview
 
-This section outlines the end-to-end customer journey aligned with the business requirements defined in the system, covering pre-purchase, purchase, and post-purchase lifecycle.
+This section outlines the end-to-end customer journey across the platform, covering discovery, purchase, and post-purchase lifecycle.
 
 ---
 
-### 1. Discovery & Product Exploration
-- Browse products via home, search, and recommendations
-- Product listing page (PLP) with filters and sorting
-- Product detail page (PDP) with product information and availability
+## Journey Flow
 
-**Additional Actions:**
-- Add/remove items from wishlist
+Homepage → Product Listing → Product Detail → Cart → Authentication → Checkout → Payment → Confirmation → Order Tracking → Returns
 
 ---
 
-### 2. Cart & Intent Formation
-- Add to cart
-- Modify quantity / remove items
-- View pricing and estimated shipping
+## 1. Homepage (Landing Page)
 
-**System Behavior:**
-- Cart persists for logged-in users
+### Overview
+
+The homepage serves as the primary entry point for users, enabling product discovery, category navigation, and promotional engagement.
 
 ---
 
-### 3. User Authentication (Mandatory)
-- Login / Signup required before checkout
+### Wireframe
 
-**System Behavior:**
-- Users must authenticate to proceed
-- Supports email/mobile OTP and social login
-- Redirect back to checkout post-login
+![Homepage](homepage.png)
 
 ---
 
-### 4. Checkout & Validation
-- Address selection / entry
-- Delivery validation
-- Coupon application
-- Tax and pricing calculation
+### UI Components
 
-**Key Validations:**
-- Inventory validation before payment
-- Mandatory fields enforcement
-- CTA enabled only after all validations pass
+- Top navigation bar:
+  - Logo (NOVA)
+  - Category links (Men, Women, Apparel, Footwear, Accessories)
+  - Search
+  - Wishlist icon
+  - Cart icon
+  - Login / Signup
 
----
+- Hero banner (carousel)
 
-### 5. Payment Processing
-- Select payment method (Card, UPI, Net Banking, Wallets)
-- Handle payment success / failure
-- Retry and failure handling
+- Featured section
+  - Highlighted categories/products
+  - "Shop All" CTA
 
----
+- Shop by Sport section
+  - Category navigation (Running, Training, Badminton)
 
-### 6. Order Confirmation
-- Order ID generation
-- Confirmation via UI, email, and SMS
-- Invoice generation
+- Best Sellers section
+  - Popular products with pricing
 
----
+- Newsletter signup
 
-### 7. Order Management & Tracking
-- View order history
-- Track order status (Placed → Packed → Shipped → Delivered)
-- Receive shipment and delivery updates
+- Footer (policies, returns, contact)
 
 ---
 
-### 8. Account & Profile Management
-Accessible via user profile:
+### System Behavior
 
-- Manage personal details
-- Manage multiple addresses
-- View and manage wishlist
-- Access saved payment methods
-- View order history and tracking
-
----
-
-### 9. Returns & Refunds
-- Raise return request within return window
-- Select return reason and upload images
-- Refund processed via original payment method
+- Navigation redirects to respective listing pages
+- Search enables keyword-based discovery
+- Product clicks navigate to PDP
+- Wishlist and cart icons reflect real-time counts
+- Carousel supports manual/auto navigation
 
 ---
 
-### Coverage
+### Business Logic
 
-This journey aligns with business requirements including user management, product catalog, checkout, payment processing, order management, and returns, ensuring a complete lifecycle from discovery to post-purchase experience.
+- Featured and Best Sellers are driven by:
+  - Sales performance
+  - Merchandising rules
+- Categories map to predefined taxonomy
+- Newsletter captures user emails
+
+---
+
+### Edge Cases
+
+- No featured products → fallback content
+- Search returns no results → empty state page
+- Broken product links → fallback handling
+- Cart/wishlist sync issues
+- Slow banner load → static fallback
+
+---
+
+### Product Thinking
+
+- Drives discovery and engagement
+- Uses visual hierarchy to guide users
+- Highlights high-performing products to boost conversion
+- Reduces friction via quick navigation
