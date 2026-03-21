@@ -20,7 +20,7 @@ The homepage serves as the primary entry point for users, enabling product disco
 
 ### Wireframe
 
-01_User_Journey/ Homepage.png
+![Homepage](Homepage.png)
 
 ---
 
