@@ -382,3 +382,93 @@ The Cart page allows users to review selected products, modify quantities and pr
 - Uses login gating strategically at checkout
 - Reduces friction by allowing guest browsing
 - Encourages conversion via clear CTA and summary
+---
+
+## 5. Authentication (Login / Signup)
+
+### Overview
+
+Authentication is required before checkout to capture user details, enable order tracking, and ensure a seamless purchase experience. Users can browse and add items to cart as guests, but must log in to proceed with checkout.
+
+---
+
+### Wireframe
+
+![Login](login.png)
+
+![OTP Verification](otp.png)
+
+---
+
+### UI Components
+
+**Login / Signup Screen:**
+- Full name (for signup)
+- Email or phone number input
+- Password input
+- Terms & conditions checkbox
+- Sign up CTA
+- Sign in CTA (for existing users)
+
+**Alternate Login Options:**
+- Phone OTP login
+- Social login (Google, Apple)
+
+**OTP Verification Modal:**
+- OTP input (4-digit)
+- Verify CTA
+- Resend OTP option
+
+---
+
+### System Behavior
+
+- Users can browse platform without login
+- Login is triggered when:
+  - User clicks "Continue to checkout"
+  - User tries to apply coupon
+- After successful login:
+  - User is redirected back to checkout
+- OTP is sent to registered mobile/email
+- OTP verification completes authentication
+- Session is maintained for logged-in users
+
+---
+
+### Business Logic
+
+- Login is mandatory for order placement
+- Guest users are converted to authenticated users at checkout
+- OTP-based login reduces friction compared to password-only login
+- Social login improves onboarding speed
+- User data (address, orders, preferences) is linked post-login
+
+---
+
+### Key Validations
+
+- Email/phone format validation
+- Password must meet minimum criteria
+- OTP must be valid and within time limit
+- Terms & conditions must be accepted during signup
+
+---
+
+### Edge Cases
+
+- Invalid OTP entered
+- OTP expired
+- Network delay in OTP delivery
+- Duplicate account (same email/phone)
+- User drops off during login
+- Session timeout after inactivity
+
+---
+
+### Product Thinking
+
+- Balances friction and conversion by delaying login requirement
+- Uses OTP to simplify authentication
+- Ensures data capture before checkout
+- Minimizes drop-offs with seamless redirect post-login
+- Supports multiple login methods for flexibility
