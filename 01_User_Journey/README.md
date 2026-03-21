@@ -478,12 +478,11 @@ Authentication is required before checkout to capture user details, enable order
 
 **Checkout – Initial State**
 
-![Checkout Address Step](checkout_address.png)
+![Select Address](address.png)
 
 **Address Selection Screen**
 
-![Select Address](address.png)
-
+![Checkout Address Step](checkout_address.png)
 ---
 
 #### Overview
