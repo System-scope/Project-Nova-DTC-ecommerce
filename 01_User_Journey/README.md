@@ -476,6 +476,12 @@ Authentication is required before checkout to capture user details, enable order
 
 #### Wireframe
 
+**Checkout – Initial State**
+
+![Checkout Address Step](checkout_address.png)
+
+**Address Selection Screen**
+
 ![Select Address](address.png)
 
 ---
@@ -500,7 +506,14 @@ The address selection in checkout follows a two-step interaction model to ensure
 
 #### UI Components
 
-- "Select Delivery Address" CTA (entry point)
+**Initial Checkout Screen:**
+- Cart summary
+- Coupons & offers section
+- Bill summary (subtotal, discount, shipping, total)
+- "Select Delivery Address" CTA
+- Continue CTA (disabled until address confirmed)
+
+**Address Selection Screen:**
 - List of saved addresses
 - Address label (Home, Office, etc.)
 - Full address details
@@ -520,29 +533,29 @@ The address selection in checkout follows a two-step interaction model to ensure
 - Default address is pre-selected but NOT auto-confirmed
 - User must explicitly select/confirm an address
 - Only one address can be selected at a time
-- Clicking "Next" proceeds only after confirmation
-- Clicking "Back" returns to previous step
+- Clicking "Next" confirms address and returns to checkout
+- Checkout CTA is enabled only after address confirmation
 
 ---
 
 #### Validation Logic
 
 - Address confirmation is mandatory before proceeding
-- If user attempts to proceed without selecting/confirming address:
+- If user tries to proceed without selecting/confirming address:
   - System blocks progression
   - Displays inline error message:
     **"Please select a delivery address to proceed"**
 
-- Validation occurs on CTA click (Next / Continue)
+- Validation is triggered on CTA click
 
 ---
 
 #### Error Handling (UX Behavior)
 
-- Error is shown inline near the address section
+- Error is shown inline near address section
 - No page refresh or disruptive UI behavior
-- Avoids layout shifts (no "jumpy" experience)
-- Guides user clearly to complete action
+- No layout shifts ("jumpy" experience avoided)
+- Clear guidance provided to user
 
 ---
 
@@ -551,7 +564,7 @@ The address selection in checkout follows a two-step interaction model to ensure
 - Prevents incorrect order placement to unintended address
 - Reduces delivery failures and return-to-origin (RTO)
 - Ensures delivery feasibility before payment
-- Balances speed (default selection) with accuracy (explicit confirmation)
+- Default selection improves speed, confirmation ensures accuracy
 
 ---
 
@@ -568,6 +581,6 @@ The address selection in checkout follows a two-step interaction model to ensure
 #### Product Thinking
 
 - Uses a two-step confirmation model to reduce user errors
-- Ensures critical delivery data is validated before payment
-- Maintains low friction with pre-selection while enforcing control
+- Balances speed (default selection) with control (mandatory confirmation)
 - Improves delivery success rate and operational efficiency
+- Ensures critical data validation before payment
