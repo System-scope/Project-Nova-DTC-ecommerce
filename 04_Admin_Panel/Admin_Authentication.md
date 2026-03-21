@@ -80,7 +80,7 @@ Confirms admin account via email.
 
 ### Wireframe
 
-![Email Confirmation](email_confirmation.png)
+![Email Confirmation](email_confirmation_message.png)
 
 ---
 
