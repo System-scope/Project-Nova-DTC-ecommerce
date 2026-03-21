@@ -8,7 +8,7 @@ The checkout experience is the final stage of the purchase journey where users p
 
 ## Checkout Flow
 
-Cart → Authentication → Address Selection → Coupon Application → Pricing Validation → Payment → Order Confirmation
+Cart → Authentication → Address → Coupons → Pricing → Payment → Order Confirmation
 
 ---
 
@@ -22,46 +22,33 @@ The address selection follows a two-step interaction model to ensure delivery ac
 
 ### Wireframe
 
-**Checkout – Initial State**
-
-
+![Checkout Address Step](checkout_address.png)  
 ![Select Address](address.png)
 
-**Address Selection Screen**
-
-![Checkout Address Step](checkout_address.png)
 ---
 
 ### System Behavior
 
-- Default address is pre-selected but NOT auto-confirmed
-- User must explicitly confirm address
-- Only one address can be selected at a time
-- Address selection is mandatory before proceeding
-
----
-
-### Validation Logic
-
-- Block checkout if no address is selected
-- Show inline error:
-  **"Please select a delivery address to proceed"**
+- Default address is pre-selected but NOT auto-confirmed  
+- User must explicitly confirm address  
+- Only one address can be selected at a time  
+- Address selection is mandatory before proceeding  
 
 ---
 
 ### Business Logic
 
-- Prevents incorrect deliveries
-- Ensures delivery feasibility before payment
-- Reduces return-to-origin (RTO)
+- Prevents incorrect deliveries  
+- Ensures delivery feasibility before payment  
+- Reduces return-to-origin (RTO)  
 
 ---
 
-### Edge Cases
+### Validation Logic
 
-- No saved addresses → force add new address
-- Address not serviceable (pincode restriction)
-- User edits or deletes address mid-checkout
+- Block checkout if no address is selected  
+- Show inline error:  
+  **"Please select a delivery address to proceed"**
 
 ---
 
@@ -81,48 +68,33 @@ Users can apply discounts either manually or by selecting from available coupons
 
 ### System Behavior
 
-- Users can apply coupons in two ways:
-
-  1. Manual entry via coupon input field  
-  2. Selection from available coupon list  
-
-- Eligible coupons are highlighted
-- Ineligible coupons are disabled
-- Only one coupon can be applied at a time
-- Applying coupon updates pricing instantly
-- Removing coupon recalculates total
+- Two methods:
+  - Manual coupon entry  
+  - Selection from available list  
+- Only one coupon allowed at a time  
+- Pricing updates instantly on apply/remove  
 
 ---
 
 ### Business Logic
 
-- Coupon eligibility based on:
-  - Minimum cart value
-  - Product/category constraints
-  - User eligibility (e.g., first-time user)
+- Eligibility based on:
+  - Cart value  
+  - Product/category  
+  - User type  
 
 - Supports:
-  - Flat discounts
-  - Percentage discounts
+  - Flat discounts  
+  - Percentage discounts  
 
-- Payment offers:
-  - Applied only when eligible payment method is selected
+- Payment offers depend on selected payment method  
 
 ---
 
 ### Validation Logic
 
-- Invalid or expired coupons cannot be applied
-- Coupon is revalidated on cart updates
-- Only one coupon allowed at a time
-
----
-
-### Edge Cases
-
-- Coupon becomes invalid after cart change
-- Payment method mismatch for bank offers
-- Network failure during coupon validation
+- Invalid/expired coupons rejected  
+- Coupon revalidated on cart updates  
 
 ---
 
@@ -130,38 +102,31 @@ Users can apply discounts either manually or by selecting from available coupons
 
 ### Overview
 
-The pricing module calculates the final payable amount based on cart value, discounts, and shipping rules.
+Calculates final payable amount based on cart value, discounts, and shipping rules.
 
 ---
 
 ### System Behavior
 
-- Subtotal = sum of (item price × quantity)
-- Discount applied based on coupon
-- Shipping calculated based on threshold
-- Final total updated dynamically
+- Subtotal = item price × quantity  
+- Discount applied via coupon  
+- Shipping calculated based on threshold  
+- Total updated dynamically  
 
 ---
 
 ### Business Logic
 
-- Free shipping above threshold (e.g., INR 899)
-- Prepaid discounts may apply
-- Taxes included in final pricing
+- Free shipping above threshold  
+- Prepaid discounts may apply  
+- Taxes included in final price  
 
 ---
 
 ### Validation Logic
 
-- Pricing must refresh on any cart change
-- Prevent mismatch between frontend and backend pricing
-
----
-
-### Edge Cases
-
-- Price updated after inventory or backend sync
-- Shipping not available for location
+- Pricing refreshes on any change  
+- Prevent frontend-backend mismatch  
 
 ---
 
@@ -169,136 +134,60 @@ The pricing module calculates the final payable amount based on cart value, disc
 
 ### Overview
 
-The payment step enables users to complete the transaction using multiple payment methods. It supports saved payment options, new payment entry, OTP-based authentication, and real-time validation based on applied offers and business rules.
+Users complete the transaction using multiple payment methods with secure authentication and real-time validation.
 
 ---
 
 ### Wireframe
 
-![Payment](payment.png)
-
+![Payment](payment.png)  
 ![OTP Screen](otp_payment.png)
-
-![Payment Failure](error_payment.png)
-
----
-
-### UI Components
-
-**Delivery Summary:**
-- Selected delivery address
-- “Change Address” CTA (editable even at payment stage)
-
-**Payment Methods:**
-- Saved cards (masked)
-- Add new card
-- UPI (GPay, PhonePe, Paytm)
-- Net banking
-- Cash on Delivery (COD)
-
-**New Card Form:**
-- Cardholder name
-- Card number
-- Expiry (Month/Year)
-- CVV
-- Save card toggle
-
-**OTP Screen (if applicable):**
-- OTP input field
-- Verify CTA
-- Resend OTP option
-
-**CTA:**
-- Dynamic “Pay” button based on method
 
 ---
 
 ### System Behavior
 
 - User can:
-  - Select saved payment method
-  - Add a new method
-- Address can be edited during payment to reduce drop-offs
-- Payment method selection dynamically updates applicable offers
+  - Select saved payment method  
+  - Add new payment method  
+- Address can be edited during payment  
+- Payment triggers gateway interaction  
 
-**Payment Flow:**
-1. User clicks “Pay”
-2. Redirect to payment gateway (if required)
-3. OTP authentication triggered (for cards/secure payments)
-4. User enters OTP
-5. Gateway returns success/failure response
+**Flow:**
+1. Click “Pay”  
+2. Redirect to gateway  
+3. OTP (if applicable)  
+4. Success/Failure response  
 
 ---
 
 ### Business Logic
 
-- Supported methods:
-  - Cards, UPI, Net Banking, COD
-- Prepaid incentives may apply
-- Bank/UPI offers:
-  - Valid only for eligible payment methods
-- Order is created only after successful payment (except COD)
+- Supports:
+  - Cards, UPI, Net Banking, COD  
+- Prepaid incentives apply  
+- Payment-method-based offers enforced  
+- Order created only after successful payment (except COD)  
 
 ---
 
 ### Validation Logic
 
-- Payment method selection is mandatory
-- Card details must be valid (format + expiry + CVV)
-- OTP must be correct for successful authentication
+- Payment method mandatory  
+- Card details must be valid  
+- OTP must be correct  
 
-**Coupon–Payment Dependency:**
-- If coupon is tied to specific payment method:
-  - Validate against selected method
-  - Show error if mismatch:
-    **"Selected offer is not applicable for this payment method"**
+- Coupon-payment dependency:
+  - Validate selected method  
+  - Block if mismatch  
 
 ---
-
-### Error Handling
-
-**Payment Failure Screen:**
-- Display clear failure message:
-  _“Oops! Your payment didn’t go through.”_
-- Provide options:
-  - Retry payment
-  - Try another payment method
-
-**OTP Errors:**
-- Invalid OTP → show inline error
-- Expired OTP → allow resend
-
-**Other Failures:**
-- Gateway timeout → show pending state + retry
-- Network failure → retry mechanism
-
----
-
-### Edge Cases
-
-- Payment success but order not created (requires reconciliation)
-- Double payment attempts
-- User exits during OTP/payment
-- Network interruption during transaction
-- COD not available for certain locations/cart values
-- Saved card expired
-- OTP not received / delayed
-
----
-
-### Product Thinking
-
-- OTP adds security layer for transactions
-- Retry and alternate payment options reduce drop-offs
-- Allowing address edit at payment stage improves conversion
-- Clear failure messaging builds user trust
-- Validating coupon–payment dependency prevents misuse of offers
 
 ## 5. Order Confirmation
 
 ### Overview
 
-Order confirmation is the final step of the checkout process, where the system confirms successful order placement and provides users with essential order details, next steps, and navigation options.
+Final step where system confirms successful order placement and provides next steps.
 
 ---
 
@@ -310,68 +199,97 @@ Order confirmation is the final step of the checkout process, where the system c
 
 ### UI Components
 
-**Success Message:**
-- “Thank you for your order!”
-- Confirmation indicator (visual/illustration)
-
-**Order Details:**
-- Order ID
-- Confirmation message
-- Instruction to track order
-
-**Primary CTAs:**
-- Track Order (redirects to Order Tracking page)
-- Continue Shopping (redirects to homepage)
+- Success message  
+- Order ID  
+- Track Order CTA  
+- Continue Shopping CTA  
 
 ---
 
 ### System Behavior
 
-- Triggered only after:
-  - Successful payment (for prepaid orders)
-  - Order creation (for COD orders)
+- Triggered after:
+  - Successful payment (prepaid)  
+  - Order creation (COD)  
 
-- System performs:
-  - Order ID generation
-  - Order record creation
-  - Inventory deduction
-  - Confirmation screen rendering
+- System actions:
+  - Generate Order ID  
+  - Create order record  
+  - Deduct inventory  
 
-- Notifications triggered:
-  - Email confirmation
-  - SMS confirmation (if enabled)
+- Notifications:
+  - Email  
+  - SMS  
 
 ---
 
 ### Business Logic
 
-- Order is considered “Placed” at this stage
-- Inventory is locked/deducted
-- Payment status updated:
-  - Paid (Prepaid)
-  - Pending (COD)
+- Order status set to “Placed”  
+- Payment status updated (Paid / Pending)  
 
 ---
 
 ### Validation Logic
 
-- Confirmation page should load only after successful backend validation
-- Prevent duplicate order creation on refresh
+- Prevent duplicate order creation  
+- Ensure confirmation only after backend success  
 
 ---
 
-### Edge Cases
+## 6. Error Handling & Edge Cases
 
-- Payment success but confirmation page fails to load
-- Duplicate order creation due to multiple retries
-- Network interruption after payment success
-- Delay in notification delivery (email/SMS)
+### Overview
+
+Handles failures across checkout stages to ensure reliability and prevent user drop-offs.
+
+---
+
+### Payment Errors
+
+![Payment Failure](error_payment.png)
+
+- Payment failure → show retry option  
+- Gateway timeout → show pending state  
+- Double payment prevention  
+
+---
+
+### OTP Errors
+
+- Invalid OTP → inline error  
+- Expired OTP → resend option  
+- OTP delay → retry mechanism  
+
+---
+
+### Coupon Errors
+
+- Invalid/expired coupon  
+- Coupon becomes invalid after cart change  
+- Payment-method mismatch  
+
+---
+
+### Address Errors
+
+- No address selected  
+- Address not serviceable  
+
+---
+
+### System Edge Cases
+
+- Payment success but order not created  
+- Network failure during transaction  
+- User exits mid-payment  
+- Inventory mismatch after checkout  
 
 ---
 
 ### Product Thinking
 
-- Clear confirmation builds user trust
-- Immediate access to tracking improves post-purchase experience
-- Dual CTAs guide users toward next actions (track vs explore)
-- Reduces anxiety after payment completion
+- Centralized error handling improves clarity  
+- Retry flows reduce drop-offs  
+- Clear messaging builds trust  
+- Prevents inconsistent system states  
